@@ -1,4 +1,4 @@
-# Go-Live Checklist (First Token Team)
+# Go-Live Checklist (Token Team)
 
 Use this checklist before sharing bridge access publicly.
 
