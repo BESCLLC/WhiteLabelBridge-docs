@@ -72,9 +72,15 @@ a:hover {
 }
 
 .brand-logo {
-  width: 34px;
-  height: 34px;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px;
+  min-height: 34px;
+  max-width: 34px;
+  max-height: 34px;
+  flex: 0 0 34px;
   object-fit: contain;
+  display: block;
   border-radius: 8px;
   border: 1px solid rgba(95, 225, 255, 0.26);
   background: rgba(7, 19, 31, 0.82);
@@ -359,8 +365,13 @@ pre code {
   }
 
   .brand-logo {
-    width: 30px;
-    height: 30px;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px;
+    min-height: 30px;
+    max-width: 30px;
+    max-height: 30px;
+    flex: 0 0 30px;
   }
 
   .nav {
