@@ -20,5 +20,8 @@ For access, contact:
 - `support@besc.services`
 - `safudev0702` on Twitter/X
 - `safudev0702` on Telegram
+- `BESCLLC` on Twitter/X
+- `CryptoKingdom (@CCCK78Youtube)` on Twitter/X
+- `CryptoKingdom (@CCCK78Youtube)` on Telegram
 
 Powered by BESC. Trademarked by BESC.

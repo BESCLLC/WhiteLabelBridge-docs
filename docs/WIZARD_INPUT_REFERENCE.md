@@ -4,7 +4,7 @@ This is the authoritative field reference for the white-label setup wizard.
 
 Access note:
 - full installer and source repository access is private
-- request access via `support@besc.services` or `safudev0702` on Twitter/X or Telegram
+- request access via `support@besc.services`, `safudev0702` (Twitter/X or Telegram), `BESCLLC` (Twitter/X), or `CryptoKingdom (@CCCK78Youtube)` (Twitter/X or Telegram)
 
 Use this document while filling the wizard so setup succeeds on first attempt.
 

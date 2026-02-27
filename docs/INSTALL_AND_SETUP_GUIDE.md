@@ -4,7 +4,7 @@ This guide is for token teams deploying the white-label bridge on their own serv
 
 Note:
 - full source code access is private
-- for access, contact `support@besc.services` or `safudev0702` on Twitter/X or Telegram
+- for access, contact `support@besc.services`, `safudev0702` (Twitter/X or Telegram), `BESCLLC` (Twitter/X), or `CryptoKingdom (@CCCK78Youtube)` (Twitter/X or Telegram)
 
 It covers:
 - one-command install

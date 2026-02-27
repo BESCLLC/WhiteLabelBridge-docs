@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wizard Input Reference | WhiteLabelBridge Docs</title>
+    <meta
+      name="description"
+      content="Authoritative setup wizard field reference for WhiteLabelBridge: format rules, required fields, and decimal/gas constraints."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          WhiteLabelBridge Docs
+        </div>
+        <nav class="nav">
+          <a href="index.html">Overview</a>
+          <a href="install-setup.html">Install</a>
+          <a class="active" href="wizard-input-reference.html">Wizard Inputs</a>
+          <a href="go-live-checklist.html">Go Live</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Wizard Field Guide</span>
+        <h1>Setup Wizard Input Reference</h1>
+        <p>
+          Use this while completing setup to avoid retries. If any required field is invalid, save is blocked and
+          backend validation returns explicit errors.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Step 1: Brand</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Required</th>
+              <th>Format / Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Project Name</td>
+              <td>Yes</td>
+              <td>Non-empty text shown in UI and metadata.</td>
+            </tr>
+            <tr>
+              <td>Domain</td>
+              <td>Recommended</td>
+              <td>Hostname only, no path. Used for nginx finalize automation.</td>
+            </tr>
+            <tr>
+              <td>Support Email</td>
+              <td>No</td>
+              <td>Valid email address.</td>
+            </tr>
+            <tr>
+              <td>Bridge Fee (%)</td>
+              <td>Yes</td>
+              <td>Number in <code>[0,100)</code>. Example <code>0.1</code> means 0.1%.</td>
+            </tr>
+            <tr>
+              <td>Logo URL</td>
+              <td>No</td>
+              <td>Full <code>http(s)</code> URL with image file. Wizard should preview and fail gracefully on bad URL.</td>
+            </tr>
+            <tr>
+              <td>Primary / Secondary / Background Color</td>
+              <td>Yes</td>
+              <td>Hex colors like <code>#3b82f6</code>.</td>
+            </tr>
+            <tr>
+              <td>Website / Docs / Support / Twitter Links</td>
+              <td>No</td>
+              <td>Full <code>http(s)</code> URLs.</td>
+            </tr>
+            <tr>
+              <td>Primary Token Symbol</td>
+              <td>Yes</td>
+              <td>1-16 uppercase letters/numbers, maps to primary lane.</td>
+            </tr>
+            <tr>
+              <td>Secondary Token Symbol</td>
+              <td>Yes</td>
+              <td>1-16 uppercase letters/numbers, maps to secondary lane.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>Step 2: Chains and Modes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Required</th>
+              <th>Format / Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>External Chain Preset</td>
+              <td>Yes</td>
+              <td><code>Ethereum | BSC | Polygon | Arbitrum | Optimism | Solana | Custom EVM</code>.</td>
+            </tr>
+            <tr>
+              <td>External Chain Type</td>
+              <td>Yes</td>
+              <td>Auto-calculated: <code>evm</code> or <code>solana</code>.</td>
+            </tr>
+            <tr>
+              <td>External Chain Name/Key</td>
+              <td>Yes</td>
+              <td>Text name + short uppercase key (<code>ETH</code>, <code>BSC</code>, <code>SOL</code>, etc.).</td>
+            </tr>
+            <tr>
+              <td>External Chain ID</td>
+              <td>EVM only</td>
+              <td>Positive integer, for example <code>1</code> on Ethereum.</td>
+            </tr>
+            <tr>
+              <td>External RPC URL</td>
+              <td>EVM only</td>
+              <td>Full <code>http(s)</code> RPC endpoint.</td>
+            </tr>
+            <tr>
+              <td>External Explorer URL</td>
+              <td>No</td>
+              <td>Full <code>http(s)</code> URL.</td>
+            </tr>
+            <tr>
+              <td>Home Side Mode</td>
+              <td>Yes</td>
+              <td>
+                <code>vault</code> or <code>mint</code>. Choose based on external chain contract capability.
+              </td>
+            </tr>
+            <tr>
+              <td>BESC RPC URL / Chain ID / Name</td>
+              <td>Yes</td>
+              <td>Required for all setups. BESC side is always part of the bridge.</td>
+            </tr>
+            <tr>
+              <td>BESC Explorer URL</td>
+              <td>No</td>
+              <td>Full <code>http(s)</code> URL.</td>
+            </tr>
+            <tr>
+              <td>BESC Side Mode</td>
+              <td>Yes</td>
+              <td>
+                <code>vault</code> or <code>mint</code>, independent from home side mode.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          Gas behavior: BESC queue releases are fixed at <code>1000 gwei</code>. External EVM uses native gas
+          estimation. Solana uses native Solana fees.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Step 3: Contracts and Decimals</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Required</th>
+              <th>Format / Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>External Wrapped Primary/Secondary Tokens</td>
+              <td>EVM only</td>
+              <td><code>0x</code> + 40 hex chars.</td>
+            </tr>
+            <tr>
+              <td>Primary/Secondary External Decimals</td>
+              <td>EVM only</td>
+              <td>Integer <code>0..30</code>, must match deployed token exactly.</td>
+            </tr>
+            <tr>
+              <td>BESC Primary/Secondary Token</td>
+              <td>Yes</td>
+              <td><code>0x</code> + 40 hex chars.</td>
+            </tr>
+            <tr>
+              <td>BESC Primary/Secondary Signer</td>
+              <td>Yes</td>
+              <td>Signer addresses. If BESC mode is <code>vault</code>, must match signer private key wallet.</td>
+            </tr>
+            <tr>
+              <td>Primary/Secondary BESC Decimals</td>
+              <td>Yes</td>
+              <td>Integer <code>0..30</code>, must match BESC token contracts exactly.</td>
+            </tr>
+            <tr>
+              <td>Mint Controller Address</td>
+              <td>No</td>
+              <td>Optional EVM address for legacy/native fallback paths.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          Critical rule: if conversion between source and destination decimals is non-exact, the bridge rejects the
+          transfer to prevent accidental over-mint or under-mint.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Step 4: Backend and Infrastructure</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Required</th>
+              <th>Format / Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frontend Backend URL</td>
+              <td>Yes</td>
+              <td>Full <code>http(s)</code> URL for API base.</td>
+            </tr>
+            <tr>
+              <td>Public API Key</td>
+              <td>Yes</td>
+              <td>Auto-generated by installer; can be rotated before save.</td>
+            </tr>
+            <tr>
+              <td>CORS Origins</td>
+              <td>Recommended</td>
+              <td>Comma-separated <code>http(s)</code> origins.</td>
+            </tr>
+            <tr>
+              <td>Backend Port</td>
+              <td>No</td>
+              <td>Integer <code>1..65535</code>.</td>
+            </tr>
+            <tr>
+              <td>Signer Private Key</td>
+              <td>Yes</td>
+              <td><code>0x</code> + 64 hex chars. Keep private at all times.</td>
+            </tr>
+            <tr>
+              <td>Postgres Connection String</td>
+              <td>Recommended</td>
+              <td><code>postgres://</code> or <code>postgresql://</code>.</td>
+            </tr>
+            <tr>
+              <td>Redis URL</td>
+              <td>Required for production reliability</td>
+              <td><code>redis://</code> or <code>rediss://</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>Step 5: Solana and ABI</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Required</th>
+              <th>Format / Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Enable Solana Route</td>
+              <td>Context</td>
+              <td>Forced on when external preset is Solana.</td>
+            </tr>
+            <tr>
+              <td>Solana RPC URL</td>
+              <td>If Solana route enabled</td>
+              <td>Full <code>http(s)</code> RPC endpoint.</td>
+            </tr>
+            <tr>
+              <td>Solana Primary/Secondary Mint</td>
+              <td>If Solana route enabled</td>
+              <td>Valid Solana addresses.</td>
+            </tr>
+            <tr>
+              <td>Primary/Secondary Solana Decimals</td>
+              <td>If Solana route enabled</td>
+              <td>Integer <code>0..30</code>, exact on-chain match required.</td>
+            </tr>
+            <tr>
+              <td>Solana Bridge Wallet + Private Key</td>
+              <td>If Solana route enabled</td>
+              <td>Wallet address with matching secret (base58, JSON keypair, or 0x hex).</td>
+            </tr>
+            <tr>
+              <td>ABI Override Fields</td>
+              <td>No</td>
+              <td>Optional JSON ABI arrays for custom contract behavior.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>Pre-Wizard Data Pack</h2>
+        <ul class="list-tight">
+          <li>Branding details: name, domain, links, logo URL, colors.</li>
+          <li>External chain details: preset, RPC, explorer, chain ID, mode.</li>
+          <li>BESC details: RPC, chain ID, explorer, mode.</li>
+          <li>Token addresses and exact decimals for both lanes on both sides.</li>
+          <li>Execution signer private key and signer addresses.</li>
+          <li>Infrastructure URLs: Postgres and Redis.</li>
+          <li>Solana wallet and mints if Solana route is enabled.</li>
+        </ul>
+      </section>
+
+      <p class="footer">
+        Related docs: <a href="install-setup.html">Install Guide</a> •
+        <a href="go-live-checklist.html">Go-Live Checklist</a>
+      </p>
+    </main>
+  </body>
+</html>

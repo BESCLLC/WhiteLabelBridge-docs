@@ -3,7 +3,7 @@
 Use this checklist before sharing bridge access publicly.
 
 Access note:
-- if your team does not have private repository access yet, contact `support@besc.services` or `safudev0702` on Twitter/X or Telegram.
+- if your team does not have private repository access yet, contact `support@besc.services`, `safudev0702` (Twitter/X or Telegram), `BESCLLC` (Twitter/X), or `CryptoKingdom (@CCCK78Youtube)` (Twitter/X or Telegram).
 
 ## A. Server + Process Readiness
 

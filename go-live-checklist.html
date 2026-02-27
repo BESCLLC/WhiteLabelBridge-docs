@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Go-Live Checklist | WhiteLabelBridge Docs</title>
+    <meta
+      name="description"
+      content="Production go-live checklist for token teams deploying BESC WhiteLabelBridge."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          WhiteLabelBridge Docs
+        </div>
+        <nav class="nav">
+          <a href="index.html">Overview</a>
+          <a href="install-setup.html">Install</a>
+          <a href="wizard-input-reference.html">Wizard Inputs</a>
+          <a class="active" href="go-live-checklist.html">Go Live</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Production Gate</span>
+        <h1>Go-Live Checklist for Token Teams</h1>
+        <p>
+          Complete every item before opening bridge access publicly. If any control fails, fix and retest first.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>A. Server and Process Readiness</h2>
+        <ul class="checklist">
+          <li><code>npm run setup:server</code> completed successfully.</li>
+          <li>Setup wizard completed and saved without validation errors.</li>
+          <li><code>npm run setup:finalize</code> completed successfully.</li>
+          <li><code>npm run pm2:status</code> shows frontend and backend online.</li>
+          <li>Domain resolves correctly and HTTPS is active.</li>
+          <li>Firewall allows only expected public ports (<code>80/443</code>).</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>B. Configuration Integrity</h2>
+        <ul class="checklist">
+          <li>External chain preset, chain ID, and RPC match intended deployment chain.</li>
+          <li>BESC RPC and chain ID are correct.</li>
+          <li>All token addresses are verified for primary and secondary lanes.</li>
+          <li>Signer private key is valid and funded for runtime gas costs.</li>
+          <li>If BESC side is <code>vault</code>, configured BESC signer addresses match signer wallet.</li>
+          <li>Decimals are exact on-chain matches for every configured token/mint.</li>
+          <li><code>homeSideMode</code> and <code>bescSideMode</code> reflect contract capabilities.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>C. Data Layer Reliability</h2>
+        <ul class="checklist">
+          <li>Redis is reachable from backend and stable.</li>
+          <li>PostgreSQL is reachable from backend and stable.</li>
+          <li>Schema initialization completed.</li>
+          <li>Queue/scanner state survives restart without drift.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>D. Security and Access Control</h2>
+        <ul class="checklist">
+          <li>Frontend requests include valid API key.</li>
+          <li>Setup overwrite protection is enabled with <code>SETUP_SECRET</code> (recommended).</li>
+          <li>No signer private key appears in git, docs, or screenshots.</li>
+          <li>SSH access is key-based and restricted.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>E. Functional Test Matrix (Small Amounts)</h2>
+        <ul class="checklist">
+          <li>Primary token: external -> BESC success.</li>
+          <li>Primary token: BESC -> external success.</li>
+          <li>Secondary token: external -> BESC success.</li>
+          <li>Secondary token: BESC -> external success.</li>
+          <li>If Solana enabled: test both directions for both token lanes.</li>
+          <li>For every test, validate tx confirmation, queue completion, and final received amount.</li>
+          <li>Confirm no over-mint, under-mint, or rounding drift.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>F. Failure Drills</h2>
+        <ul class="checklist">
+          <li>Invalid API key is rejected.</li>
+          <li>Invalid wizard decimal format is blocked.</li>
+          <li>Invalid address format is blocked.</li>
+          <li>Non-exact decimal conversion is rejected safely.</li>
+          <li>PM2 restart recovers cleanly without transaction loss.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Launch Decision</h2>
+        <p>
+          Go live only if all checklist sections pass and no unresolved queue/scanner errors remain in logs.
+        </p>
+        <div class="callout">
+          If your home chain cannot support full burn/mint flows, use <code>vault</code> mode on that side and keep
+          BESC side mode independent based on your token design.
+        </div>
+      </section>
+
+      <p class="footer">
+        Access requests: <a href="mailto:support@besc.services">support@besc.services</a> •
+        <a href="https://x.com/safudev0702" target="_blank" rel="noreferrer">safudev0702</a> •
+        <a href="https://x.com/BESCLLC" target="_blank" rel="noreferrer">BESCLLC</a> •
+        <a href="https://x.com/CCCK78Youtube" target="_blank" rel="noreferrer">CryptoKingdom (@CCCK78Youtube)</a> /
+        <a href="https://t.me/CCCK78Youtube" target="_blank" rel="noreferrer">Telegram</a>
+      </p>
+    </main>
+  </body>
+</html>

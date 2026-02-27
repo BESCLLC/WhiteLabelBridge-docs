@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhiteLabelBridge Docs | BESC</title>
+    <meta
+      name="description"
+      content="Official public docs for BESC WhiteLabelBridge. Deploy your branded token bridge with one-command install and setup wizard."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          WhiteLabelBridge Docs
+        </div>
+        <nav class="nav">
+          <a class="active" href="index.html">Overview</a>
+          <a href="install-setup.html">Install</a>
+          <a href="wizard-input-reference.html">Wizard Inputs</a>
+          <a href="go-live-checklist.html">Go Live</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Powered by BESC | Trademarked by BESC</span>
+        <h1>Public Documentation for WhiteLabelBridge</h1>
+        <p>
+          WhiteLabelBridge gives token teams a full bridge platform between their home chain and
+          BESC Hyperchain, with a guided setup wizard and production-safe decimal handling.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="install-setup.html">Start Deployment Guide</a>
+          <a class="btn btn-ghost" href="wizard-input-reference.html">Open Wizard Reference</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>What This Product Delivers</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>One External Chain + BESC</h3>
+            <p>Connect Ethereum, BSC, Polygon, Arbitrum, Optimism, Solana, or custom EVM to BESC Hyperchain.</p>
+          </article>
+          <article class="card">
+            <h3>Mode Per Side</h3>
+            <p>Run <code>vault</code> (lock/release) or <code>mint</code> (burn/mint) independently on each side.</p>
+          </article>
+          <article class="card">
+            <h3>Install + Wizard Flow</h3>
+            <p>Deploy with one command, complete wizard, finalize, and go live with PM2-managed services.</p>
+          </article>
+          <article class="card">
+            <h3>Exact Decimal Safety</h3>
+            <p>Cross-decimal conversion rejects non-exact outcomes to prevent over mint, under mint, or drift.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Fast Path</h2>
+        <ol class="list-tight">
+          <li>Run <code>npm run setup:server</code> on your server.</li>
+          <li>Open setup wizard URL printed in terminal.</li>
+          <li>Provide chain data, signer key, contract addresses, and exact decimals.</li>
+          <li>Run <code>npm run setup:finalize</code> to apply runtime and infrastructure settings.</li>
+          <li>Execute full go-live checklist before opening the bridge publicly.</li>
+        </ol>
+        <div class="callout">
+          BESC queue releases are fixed at <code>1000 gwei</code>. External EVM routes use chain-native gas
+          estimation. Solana routes use native Solana fees.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Documentation Map</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Use It For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="install-setup.html">Install and Setup Guide</a></td>
+              <td>Server prerequisites, one-command install, finalize flow, PM2, verification, failure recovery.</td>
+            </tr>
+            <tr>
+              <td><a href="wizard-input-reference.html">Wizard Input Reference</a></td>
+              <td>Exact field formats, required/optional flags, accepted values, and decimals/mode guidance.</td>
+            </tr>
+            <tr>
+              <td><a href="go-live-checklist.html">Go-Live Checklist</a></td>
+              <td>Operational readiness, security checks, test matrix, and launch sign-off controls.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>Need Full Bridge Code Access?</h2>
+        <p>
+          The implementation repository is private. If your team wants a white-label deployment, contact:
+        </p>
+        <ul class="list-tight">
+          <li><a href="mailto:support@besc.services">support@besc.services</a></li>
+          <li><a href="https://x.com/safudev0702" target="_blank" rel="noreferrer">safudev0702 on Twitter/X</a></li>
+          <li><a href="https://t.me/safudev0702" target="_blank" rel="noreferrer">safudev0702 on Telegram</a></li>
+          <li><a href="https://x.com/BESCLLC" target="_blank" rel="noreferrer">BESCLLC on Twitter/X</a></li>
+          <li><a href="https://x.com/CCCK78Youtube" target="_blank" rel="noreferrer">CryptoKingdom (@CCCK78Youtube) on Twitter/X</a></li>
+          <li><a href="https://t.me/CCCK78Youtube" target="_blank" rel="noreferrer">CryptoKingdom (@CCCK78Youtube) on Telegram</a></li>
+        </ul>
+        <p class="subtle">After approval, your team receives access to the private codebase and setup package.</p>
+      </section>
+
+      <p class="footer">
+        WhiteLabelBridge Public Docs • BESC LLC • <a href="README.md">Repository README</a>
+      </p>
+    </main>
+  </body>
+</html>

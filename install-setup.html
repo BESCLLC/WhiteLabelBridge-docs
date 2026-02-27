@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Install and Setup Guide | WhiteLabelBridge Docs</title>
+    <meta name="description" content="Server install, setup wizard completion, and production finalize flow for BESC WhiteLabelBridge." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          WhiteLabelBridge Docs
+        </div>
+        <nav class="nav">
+          <a href="index.html">Overview</a>
+          <a class="active" href="install-setup.html">Install</a>
+          <a href="wizard-input-reference.html">Wizard Inputs</a>
+          <a href="go-live-checklist.html">Go Live</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Install and Setup Guide</span>
+        <h1>Deploy on One Server, Then Launch via Wizard</h1>
+        <p>
+          This guide is for token teams deploying WhiteLabelBridge on their own infrastructure.
+          Frontend and backend run on the same server by design.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>1. Prerequisites</h2>
+        <ul class="list-tight">
+          <li>Linux server (Ubuntu or Debian recommended).</li>
+          <li><code>node >= 18</code> (Node 20 LTS recommended) and npm.</li>
+          <li>Internet access for package download.</li>
+          <li>Recommended for production: PostgreSQL + Redis + stable RPC endpoints.</li>
+          <li>Optional but recommended: domain pointed to server before finalize.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>2. One-Command Install</h2>
+        <pre><code>npm run setup:server</code></pre>
+        <p>Installer actions:</p>
+        <ul class="list-tight">
+          <li>Installs frontend/backend dependencies.</li>
+          <li>Generates bootstrap defaults (including wizard API key default).</li>
+          <li>Builds frontend output.</li>
+          <li>Initializes DB schema when <code>PG_CONNECTION_STRING</code> is present.</li>
+          <li>Starts or reloads PM2 processes.</li>
+          <li>Prints wizard URL and setup status URL.</li>
+        </ul>
+        <p>Useful variants:</p>
+        <pre><code>SKIP_PM2=1 npm run setup:server
+AUTO_INSTALL_SYSTEM_DEPS=0 npm run setup:server
+FRONTEND_PORT=8080 BACKEND_PORT=4000 npm run setup:server</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>3. Complete the Setup Wizard</h2>
+        <ul class="list-tight">
+          <li>Open the wizard URL printed by the installer.</li>
+          <li>Enter branding, chain settings, token addresses, signer, and decimals.</li>
+          <li>Pick mode per side: <code>vault</code> or <code>mint</code>.</li>
+          <li>Confirm decimals exactly match deployed contracts/mints.</li>
+          <li>Save configuration and verify success status.</li>
+        </ul>
+        <p>
+          Field-level definitions are documented in
+          <a href="wizard-input-reference.html">Wizard Input Reference</a>.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>4. Finalize Runtime</h2>
+        <pre><code>npm run setup:finalize</code></pre>
+        <p>Finalize actions:</p>
+        <ul class="list-tight">
+          <li>Ensures database schema is initialized.</li>
+          <li>Reloads PM2 with generated runtime environment.</li>
+          <li>Optionally configures nginx from wizard domain/backend URL.</li>
+          <li>Optionally provisions SSL with certbot.</li>
+        </ul>
+        <p>Variants:</p>
+        <pre><code>CERTBOT_EMAIL=ops@yourdomain.com npm run setup:finalize
+CONFIGURE_NGINX=0 npm run setup:finalize</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>5. Validate Service Health</h2>
+        <pre><code>npm run pm2:status
+curl -s http://127.0.0.1:3000/setup/status</code></pre>
+        <p>
+          Confirm setup status returns <code>"configured": true</code>, then verify UI loads and wallet connect works.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>6. Gas + Decimal Rules</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Rule</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BESC release queue gas</td>
+              <td><code>1000 gwei</code> fixed.</td>
+            </tr>
+            <tr>
+              <td>External EVM gas</td>
+              <td>Chain-native estimate and runtime gas behavior.</td>
+            </tr>
+            <tr>
+              <td>Solana fees</td>
+              <td>Native Solana fee model.</td>
+            </tr>
+            <tr>
+              <td>Cross-decimal conversion</td>
+              <td>Non-exact conversion is rejected to prevent over/under mint and drift.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>7. Common Failure Recovery</h2>
+        <ul class="list-tight">
+          <li>
+            Wizard save fails
+            <span class="status err">check required fields</span>
+            Validate URLs, addresses, and decimals format.
+          </li>
+          <li>
+            PM2 start fails
+            <span class="status warn">dependency/runtime mismatch</span>
+            Re-run install and inspect <code>npm run pm2:logs</code>.
+          </li>
+          <li>
+            Unauthorized API
+            <span class="status warn">API key mismatch</span>
+            Re-save wizard API key then run <code>npm run setup:finalize</code>.
+          </li>
+          <li>
+            Bridge amount rejected
+            <span class="status err">decimal mismatch</span>
+            Correct decimals in wizard, save, finalize, then retest.
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>8. Launch Gate</h2>
+        <p>Do not launch before completing the full production checklist:</p>
+        <p><a class="btn btn-primary" href="go-live-checklist.html">Open Go-Live Checklist</a></p>
+      </section>
+
+      <p class="footer">
+        Need private codebase access? Contact <a href="mailto:support@besc.services">support@besc.services</a>,
+        <a href="https://x.com/safudev0702" target="_blank" rel="noreferrer">safudev0702</a>,
+        <a href="https://x.com/BESCLLC" target="_blank" rel="noreferrer">BESCLLC</a>, or
+        <a href="https://x.com/CCCK78Youtube" target="_blank" rel="noreferrer">CryptoKingdom (@CCCK78Youtube)</a>
+        (<a href="https://t.me/CCCK78Youtube" target="_blank" rel="noreferrer">Telegram</a>).
+      </p>
+    </main>
+  </body>
+</html>
